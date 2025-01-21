@@ -4,7 +4,6 @@ const bcrypt = require('bcrypt');
 const db = require('./db'); // Import the database connection
 const port = 3001;
 require('dotenv').config();
-require("./routes")
 
 const apiKeyMiddleware = (req, res, next) => {
   const apiKey = req.headers['api-key']; // API key is sent in the 'x-api-key' header
