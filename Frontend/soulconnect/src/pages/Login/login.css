@@ -1,0 +1,96 @@
+/* Algemene body instellingen */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f7f6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+/* Container voor de login box */
+.login-container {
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    width: 350px;
+    text-align: center;
+}
+
+/* Titel van de login */
+.login-container h2 {
+    margin-bottom: 30px;
+    color: #333333;
+    font-size: 24px;
+}
+
+/* Algemeen ontwerp voor de form groepen */
+.form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+/* Labels voor inputs */
+.form-group label {
+    font-size: 14px;
+    color: #666666;
+    display: block;
+    margin-bottom: 5px;
+}
+
+/* Stijl voor de invoervelden */
+.login-container input[type="email"],
+.login-container input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 14px;
+    background-color: #f9f9f9;
+    transition: border-color 0.3s ease;
+}
+
+.login-container input[type="email"]:focus,
+.login-container input[type="password"]:focus {
+    border-color: #4CAF50;
+    outline: none;
+}
+
+/* Stijl voor de login button */
+.login-button {
+    width: 100%;
+    padding: 12px;
+    background-color: #4CAF50;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.login-button:hover {
+    background-color: #45a049;
+}
+
+/* Links onderaan voor wachtwoord of registratie */
+.links {
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+.links a {
+    display: block;
+    color: #4CAF50;
+    text-decoration: none;
+    margin-top: 10px;
+    transition: color 0.3s ease;
+}
+
+.links a:hover {
+    color: #45a049;
+    text-decoration: underline;
+}
