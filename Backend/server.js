@@ -6,11 +6,6 @@ const port = 3001;
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
 require('dotenv').config();
-<<<<<<< HEAD
-require("./routes")
-const likesRoutes = require('./controllers/Likes');
-=======
->>>>>>> 097d8e4dcdc3c8ec4cf587b7bff7e8d856fe0c1f
 
 const apiKeyMiddleware = (req, res, next) => {
   const apiKey = req.headers['api-key']; // API key is sent in the 'x-api-key' header
@@ -40,9 +35,7 @@ const app = express();
 app.use(cors(corsOptions)); // To allow cross-origin requests
 app.use(express.json()); // To parse JSON bodies
 
-<<<<<<< HEAD
-app.use('/api', apiKeyMiddleware, likesRoutes);
-=======
+
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
@@ -50,7 +43,6 @@ const transporter = nodemailer.createTransport({
     pass: 'xigf bflc yymj olqm', // Gebruik een app-specifiek wachtwoord in plaats van je echte wachtwoord
   },
 });
->>>>>>> 097d8e4dcdc3c8ec4cf587b7bff7e8d856fe0c1f
 
 app.post('/users', apiKeyMiddleware, async (req, res) => {
   const { 
@@ -61,9 +53,7 @@ app.post('/users', apiKeyMiddleware, async (req, res) => {
     zip_code, 
     gender, 
     accept_service, 
-    payment, 
-    foto, 
-    admin 
+    foto
   } = req.body;
 
   // Validate password strength
@@ -188,6 +178,111 @@ app.post('/users/login', async (req, res) => {
       }
   });
 });
+
+app.put('/users/:id', apiKeyMiddleware, async (req, res) => {
+  const { id } = req.params;
+  const { 
+    email, 
+    nickname, 
+    old_password, 
+    new_password, 
+    confirm_password, 
+    zip_code, 
+    gender, 
+    foto 
+  } = req.body;
+
+  // Haal de bestaande gebruikergegevens op
+  db.query('SELECT * FROM users WHERE user_id = ?', [id], async (err, results) => {
+    if (err) {
+      return res.status(500).send(err);
+    }
+    if (results.length === 0) {
+      return res.status(404).send('Gebruiker niet gevonden.');
+    }
+
+    const user = results[0];
+
+    // Controleer of het e-mailadres wordt bijgewerkt en of het al bestaat
+    if (email && email !== user.email) {
+      db.query('SELECT * FROM users WHERE email = ?', [email], (err, emailResults) => {
+        if (err) {
+          return res.status(500).send('Databasefout bij het controleren van e-mail.');
+        }
+
+        if (emailResults.length > 0) {
+          return res.status(400).send('Een gebruiker met dit e-mailadres bestaat al.');
+        }
+
+        // Als het e-mailadres geldig is, ga door met bijwerken
+        updateUserData();
+      });
+    } else {
+      // Als het e-mailadres niet wordt bijgewerkt of het is geldig, ga door met bijwerken
+      updateUserData();
+    }
+
+    // Functie om de gebruiker bij te werken
+    async function updateUserData() {
+      // Als het wachtwoord wordt bijgewerkt, controleren of het oude wachtwoord correct is en het nieuwe wachtwoord is bevestigd
+      let updatedPassword = user.password;
+      if (new_password) {
+        if (old_password) {
+          // Vergelijk het oude wachtwoord met het opgeslagen wachtwoord
+          const isMatch = await bcrypt.compare(old_password, user.password);
+          if (!isMatch) {
+            return res.status(400).send('Het oude wachtwoord is incorrect.');
+          }
+        } else {
+          return res.status(400).send('Je moet je oude wachtwoord invoeren.');
+        }
+
+        // Controleer of de nieuwe wachtwoorden overeenkomen
+        if (new_password !== confirm_password) {
+          return res.status(400).send('De nieuwe wachtwoorden komen niet overeen.');
+        }
+
+        // Valideer wachtwoordsterkte
+        if (!validatePassword(new_password)) {
+          return res.status(400).send('Wachtwoord voldoet niet aan de vereisten.');
+        }
+
+        // Hash het nieuwe wachtwoord
+        updatedPassword = await bcrypt.hash(new_password, 10);
+      }
+
+      // Update alleen de velden die zijn meegegeven
+      const updatedUser = {
+        email: email || user.email,
+        nickname: nickname || user.nickname,
+        zip_code: zip_code || user.zip_code,
+        gender: gender || user.gender,
+        foto: foto || user.foto,
+        password: updatedPassword, // Zet het gehashte wachtwoord als het is bijgewerkt
+      };
+
+      // Bijwerken van de gebruiker in de database
+      db.query(
+        'UPDATE users SET email = ?, nickname = ?, zip_code = ?, gender = ?, foto = ?, password = ? WHERE user_id = ?',
+        [updatedUser.email, updatedUser.nickname, updatedUser.zip_code, updatedUser.gender, updatedUser.foto, updatedUser.password, id],
+        (err, updateResults) => {
+          if (err) {
+            return res.status(500).send(err);
+          }
+
+          res.json({
+            message: 'Gebruiker succesvol bijgewerkt',
+            id,
+            ...updatedUser,
+          });
+        }
+      );
+    }
+  });
+});
+
+
+
 
 app.get('/extra', apiKeyMiddleware, (req, res) => {
   db.query('SELECT * FROM extra', (err, results) => {
