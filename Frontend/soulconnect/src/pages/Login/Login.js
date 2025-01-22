@@ -1,15 +1,23 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './login.css';
 
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const navigate = useNavigate(); // Hook voor navigatie
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Handle login logic here
-        console.log('Email:', email);
-        console.log('Password:', password);
+
+        // Controleer of de ingevoerde gegevens correct zijn
+        if (email === 'test@gmail.com' && password === '123') {
+            console.log('Succesvol ingelogd');
+            navigate('/landpage'); // Stuur gebruiker door naar Landpage.js
+        } else {
+            console.log('Ongeldige inloggegevens');
+            alert('E-mail of wachtwoord is onjuist. Probeer het opnieuw.');
+        }
     };
 
     return (
