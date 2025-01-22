@@ -3,6 +3,8 @@ const cors = require('cors');
 const bcrypt = require('bcrypt');
 const db = require('./db'); // Import the database connection
 const port = 3001;
+const crypto = require('crypto');
+const nodemailer = require('nodemailer');
 require('dotenv').config();
 
 const apiKeyMiddleware = (req, res, next) => {
@@ -25,7 +27,7 @@ const validatePassword = (password) => {
 };
 
 const corsOptions = {
-    origin: 'http://localhost:3000', // Specifieke origin
+    origin: 'http://localhost:3001', // Specifieke origin
     credentials: true 
   }
 // Create an Express app
@@ -33,12 +35,12 @@ const app = express();
 app.use(cors(corsOptions)); // To allow cross-origin requests
 app.use(express.json()); // To parse JSON bodies
 
-
-app.get('/users', apiKeyMiddleware, (req, res) => {
-  db.query('SELECT * FROM users', (err, results) => {
-      if (err) return res.status(500).send(err);
-      res.json(results);
-  });
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'dwaynepiest@gmail.com',
+    pass: 'xigf bflc yymj olqm', // Gebruik een app-specifiek wachtwoord in plaats van je echte wachtwoord
+  },
 });
 
 app.post('/users', apiKeyMiddleware, async (req, res) => {
@@ -79,27 +81,44 @@ app.post('/users', apiKeyMiddleware, async (req, res) => {
       // Hash the password
       const hashedPassword = await bcrypt.hash(password, 10);
 
-      // Insert the new user
+      // Generate a verification token
+      const verificationToken = crypto.randomBytes(32).toString('hex');
+      const verificationLink = `http://localhost:3001/verify-email?token=${verificationToken}`;
+
+      // Insert the new user with is_verified set to 0
       db.query(
-        'INSERT INTO users (nickname, email, password, birth_date, zip_code, gender, accept_service, payment, foto, admin) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-        [nickname, email, hashedPassword, birth_date, zip_code, gender, accept_service, payment, foto, admin],
+        'INSERT INTO users (nickname, email, password, birth_date, zip_code, gender, accept_service, payment, foto, admin, is_verified, verification_token) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, ?)',
+        [nickname, email, hashedPassword, birth_date, zip_code, gender, accept_service, payment, foto, admin, verificationToken],
         async (err, results) => {
           if (err) {
             return res.status(500).send(err);
           }
 
-          res.json({
-            message: 'Gebruiker succesvol geregistreerd. Verifieer je e-mailadres om in te loggen.',
-            id: results.insertId,
-            nickname,
-            email,
-            birth_date,
-            zip_code,
-            gender,
-            accept_service,
-            payment,
-            foto,
-            admin,
+          // Send verification email
+          const mailOptions = {
+            from: 'info@soulconnect.com',
+            to: email,
+            subject: 'Verifieer je e-mailadres',
+            html: `
+              <p>Hallo ${nickname},</p>
+              <p>Bedankt voor je registratie. Klik op de onderstaande link om je e-mailadres te verifiëren:</p>
+              <a href="${verificationLink}">${verificationLink}</a>
+              <p>Als je je niet hebt geregistreerd, kun je deze e-mail negeren.</p>
+            `,
+          };
+
+          transporter.sendMail(mailOptions, (err, info) => {
+            if (err) {
+              console.error('Error sending email:', err); // Log de exacte foutmelding
+              return res.status(500).send(err);
+            }
+
+            res.json({
+              message: 'Gebruiker succesvol geregistreerd. Controleer je e-mail om je account te verifiëren.',
+              id: results.insertId,
+              nickname,
+              email,
+            });
           });
         }
       );
@@ -109,6 +128,35 @@ app.post('/users', apiKeyMiddleware, async (req, res) => {
     res.status(500).send('Error occurred during registration.');
   }
 });
+
+app.get('/verify-email', (req, res) => {
+  const { token } = req.query;
+
+  if (!token) {
+    return res.status(400).send('Geen verificatietoken opgegeven.');
+  }
+
+  // Zoek de gebruiker op basis van de verificatietoken
+  db.query('SELECT * FROM users WHERE verification_token = ?', [token], (err, results) => {
+    if (err) {
+      return res.status(500).send('Databasefout bij het controleren van de token.');
+    }
+
+    if (results.length === 0) {
+      return res.status(400).send('Ongeldige of verlopen verificatietoken.');
+    }
+
+    // De gebruiker is gevonden, dus werk de verificatie bij naar 1
+    db.query('UPDATE users SET is_verified = 1, verification_token = NULL WHERE verification_token = ?', [token], (err) => {
+      if (err) {
+        return res.status(500).send('Fout bij het verifiëren van de gebruiker.');
+      }
+
+      res.send('E-mailadres succesvol geverifieerd. Je kunt nu inloggen.');
+    });
+  });
+});
+
 
 app.post('/users/login', async (req, res) => {
   const { email, password } = req.body;
