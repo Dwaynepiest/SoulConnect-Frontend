@@ -5,17 +5,9 @@ const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
     password: '',
-    database: 'soulconnect'
+    database: 'soulconnnect'
 });
 
-// MySQL connection
-// const db = mysql.createConnection({
-//     host: 'db.22literverf.store',
-//     port: '3306',
-//     user: 'user',
-//     password: 'daap',
-//     database: 'db'
-// });
 
 db.connect((err) => {
     if (err) {
