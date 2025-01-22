@@ -6,6 +6,11 @@ const port = 3001;
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
 require('dotenv').config();
+<<<<<<< HEAD
+require("./routes")
+const likesRoutes = require('./controllers/Likes');
+=======
+>>>>>>> 097d8e4dcdc3c8ec4cf587b7bff7e8d856fe0c1f
 
 const apiKeyMiddleware = (req, res, next) => {
   const apiKey = req.headers['api-key']; // API key is sent in the 'x-api-key' header
@@ -35,6 +40,9 @@ const app = express();
 app.use(cors(corsOptions)); // To allow cross-origin requests
 app.use(express.json()); // To parse JSON bodies
 
+<<<<<<< HEAD
+app.use('/api', apiKeyMiddleware, likesRoutes);
+=======
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
@@ -42,6 +50,7 @@ const transporter = nodemailer.createTransport({
     pass: 'xigf bflc yymj olqm', // Gebruik een app-specifiek wachtwoord in plaats van je echte wachtwoord
   },
 });
+>>>>>>> 097d8e4dcdc3c8ec4cf587b7bff7e8d856fe0c1f
 
 app.post('/users', apiKeyMiddleware, async (req, res) => {
   const { 
