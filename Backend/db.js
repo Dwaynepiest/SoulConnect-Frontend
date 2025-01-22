@@ -1,4 +1,4 @@
-const mysql = require('mysql2');
+const mysql = require('mysql2/promise');
 
 // MySQL connection
 const db = mysql.createConnection({
@@ -17,13 +17,22 @@ const db = mysql.createConnection({
 //     database: 'db'
 // });
 
-db.connect((err) => {
-    if (err) {
-        console.error('Error connecting to the database:', err);
-        process.exit(1); // Exit the application if connection fails
-    } else {
-        console.log('Connected to the MySQL database');
-    }
-});
+// // MySQL connection
+// // const db = mysql.createConnection({
+// //     host: 'db.22literverf.store',
+// //     port: '3306',
+// //     user: 'user',
+// //     password: 'daap',
+// //     database: 'db'
+// // });
 
-module.exports = db;
+// db.connect((err) => {
+//     if (err) {
+//         console.error('Error connecting to the database:', err);
+//         process.exit(1); // Exit the application if connection fails
+//     } else {
+//         console.log('Connected to the MySQL database');
+//     }
+// });
+
+// module.exports = db;
