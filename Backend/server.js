@@ -5,6 +5,7 @@ const db = require('./db'); // Import the database connection
 const port = 3001;
 require('dotenv').config();
 require("./routes")
+const likesRoutes = require('./controllers/Likes');
 
 const apiKeyMiddleware = (req, res, next) => {
   const apiKey = req.headers['api-key']; // API key is sent in the 'x-api-key' header
@@ -24,6 +25,7 @@ const app = express();
 app.use(cors(corsOptions)); // To allow cross-origin requests
 app.use(express.json()); // To parse JSON bodies
 
+app.use('/api', apiKeyMiddleware, likesRoutes);
 
 app.get('/users', apiKeyMiddleware, (req, res) => {
   db.query('SELECT * FROM users', (err, results) => {
