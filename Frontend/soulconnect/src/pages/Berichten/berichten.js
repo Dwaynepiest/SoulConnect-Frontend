@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, Outlet } from 'react-router-dom'; 
 import { messages } from './messages'; 
+import './berichten.css';
 
 function BerichtenPagina() {
   const [messagesData, setMessagesData] = useState([]);
@@ -8,7 +9,6 @@ function BerichtenPagina() {
   useEffect(() => {
     setMessagesData(messages); 
   }, []);
-
 
   const lastMessages = messagesData.reduce((acc, msg) => {
     if (msg.sender === 'You') {
@@ -20,7 +20,6 @@ function BerichtenPagina() {
     if (!acc[contactId]) {
       acc[contactId] = msg; 
     } else {
-   
       if (new Date(msg.timestamp) > new Date(acc[contactId].timestamp)) {
         acc[contactId] = msg;
       }
@@ -31,26 +30,21 @@ function BerichtenPagina() {
   const lastMessagesArray = Object.values(lastMessages);
 
   return (
-    <div style={{ display: 'flex', height: '100vh' }}>
-      <div style={{ width: '300px', padding: '20px', borderRight: '1px solid #ddd', overflowY: 'auto' }}>
+    <div className="main-container">
+      <div className="sidebar">
         <h2>Chats</h2>
         {lastMessagesArray.map((msg) => (
           <Link
             key={msg.id}
             to={`/berichten/${msg.receiver === 'You' ? msg.sender : msg.receiver}`}
-            style={{
-              textDecoration: 'none',
-              color: 'black',
-              display: 'flex',
-              marginBottom: '10px',
-            }}
+            className="chat-link"
           >
             <img
               src={msg.profilePicture}
               alt={`${msg.receiver === 'You' ? msg.sender : msg.receiver}'s profile`}
-              style={{ width: '50px', height: '50px', borderRadius: '50%' }}
+              className="profile-pic"
             />
-            <div style={{ marginLeft: '10px' }}>
+            <div className="message-preview">
               <p>
                 <strong>{msg.receiver === 'You' ? msg.sender : msg.receiver}</strong>
                 <small>{msg.timestamp}</small>
@@ -61,8 +55,7 @@ function BerichtenPagina() {
         ))}
       </div>
 
-
-      <div style={{ flex: 1, padding: '20px', overflowY: 'auto' }}>
+      <div className="content">
         <Outlet /> 
       </div>
     </div>
