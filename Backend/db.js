@@ -1,4 +1,4 @@
-const mysql = require('mysql2/promise');
+const mysql = require('mysql2');
 
 // MySQL connection
 const db = mysql.createConnection({
@@ -7,6 +7,20 @@ const db = mysql.createConnection({
     password: '',
     database: 'soulconnect'
 });
+
+// const mysql = require('mysql2/promise');
+
+// const db = mysql.createPool({
+//   host: 'localhost',
+//   user: 'root',
+//   password: '',
+//   database: 'soulconnect',
+//   waitForConnections: true,
+//   connectionLimit: 10,
+//   queueLimit: 0
+// });
+
+
 
 // MySQL connection
 // const db = mysql.createConnection({
@@ -35,4 +49,4 @@ const db = mysql.createConnection({
 //     }
 // });
 
-// module.exports = db;
+module.exports = db;
