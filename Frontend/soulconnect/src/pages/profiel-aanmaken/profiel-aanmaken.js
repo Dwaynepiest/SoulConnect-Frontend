@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Webcam from 'react-webcam';
+import { useNavigate } from 'react-router-dom';
 import './profiel-aanmaken.css';
 
 const ProfielAanmaken = () => {
@@ -9,6 +10,7 @@ const ProfielAanmaken = () => {
     postcode: '',
     gender: '',
     facePhoto: null,
+    uploadedPhoto: null,
     nickname: '',
     oneliner: '',
     waarderingRelatie: '',
@@ -19,20 +21,48 @@ const ProfielAanmaken = () => {
   });
   const [step, setStep] = useState(1);
   const [webcamEnabled, setWebcamEnabled] = useState(false);
+  const [tempPhoto, setTempPhoto] = useState(null);
   const webcamRef = React.useRef(null);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    setFormData({
-      ...formData,
-      [name]: type === 'checkbox' ? checked : value,
-    });
+    const { name, value, type, checked, files } = e.target;
+    if (type === 'file') {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        setFormData({
+          ...formData,
+          [name]: event.target.result,
+        });
+      };
+      reader.readAsDataURL(files[0]);
+    } else {
+      setFormData({
+        ...formData,
+        [name]: type === 'checkbox' ? checked : value,
+      });
+    }
   };
 
   const handleWebcamCapture = () => {
     const imageSrc = webcamRef.current.getScreenshot();
-    setFormData({ ...formData, facePhoto: imageSrc });
+    setTempPhoto(imageSrc);
     setWebcamEnabled(false);
+  };
+
+  const handleKeepPhoto = () => {
+    setFormData({ ...formData, facePhoto: tempPhoto });
+    setTempPhoto(null);
+  };
+
+  const handleRetakePhoto = () => {
+    setTempPhoto(null);
+    setWebcamEnabled(true);
+  };
+
+  const handleRemovePhoto = () => {
+    setFormData({ ...formData, facePhoto: null });
+    setWebcamEnabled(true);
   };
 
   const handleSubmit = (e) => {
@@ -46,6 +76,7 @@ const ProfielAanmaken = () => {
       }
       console.log('Ingevoerde gegevens:', formData);
       // Voeg hier logica toe om gegevens te verwerken
+      navigate('/home'); // Navigeer naar de home pagina na succesvolle profiel aanmaken
     }
   };
 
@@ -104,27 +135,59 @@ const ProfielAanmaken = () => {
               </select>
             </div>
             <div className="form-group">
-              <label>Gezichts foto:</label>
+              <label htmlFor="uploadedPhoto">Upload een bestaande foto:</label>
+              <input
+                type="file"
+                id="uploadedPhoto"
+                name="uploadedPhoto"
+                accept="image/*"
+                onChange={handleChange}
+                required
+              />
+              {formData.uploadedPhoto && (
+                <img src={formData.uploadedPhoto} alt="Uploaded Face" className="uploaded-photo" />
+              )}
+            </div>
+            <div className="form-group webcam-container">
+              <label>Neem een nieuwe foto:</label>
               {webcamEnabled ? (
                 <div>
                   <Webcam
                     audio={false}
                     ref={webcamRef}
                     screenshotFormat="image/jpeg"
-                    width={320}
+                    width={400}
                     height={240}
                     videoConstraints={{
-                      width: 320,
+                      width: 400,
                       height: 240,
                       facingMode: "user"
                     }}
+                    mirrored={true}
+                    className="webcam-video"
                   />
                   <button type="button" onClick={handleWebcamCapture}>Capture Photo</button>
                 </div>
               ) : (
-                <button type="button" onClick={() => setWebcamEnabled(true)}>Enable Webcam</button>
+                !formData.facePhoto && !tempPhoto && (
+                  <button type="button" onClick={() => setWebcamEnabled(true)}>Enable Webcam</button>
+                )
               )}
-              {formData.facePhoto && <img src={formData.facePhoto} alt="Face" />}
+              {tempPhoto && (
+                <div>
+                  <img src={tempPhoto} alt="Temporary Face" />
+                  <div className="button-group">
+                    <button type="button" onClick={handleKeepPhoto}>Keep Photo</button>
+                    <button type="button" onClick={handleRetakePhoto}>Retake Photo</button>
+                  </div>
+                </div>
+              )}
+              {formData.facePhoto && !tempPhoto && (
+                <div>
+                  <img src={formData.facePhoto} alt="Face" />
+                  <button type="button" onClick={handleRemovePhoto}>Retake Photo</button>
+                </div>
+              )}
             </div>
             <button type="submit">Volgende</button>
           </>
