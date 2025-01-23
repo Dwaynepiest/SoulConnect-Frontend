@@ -1,22 +1,39 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import './login.css';
 
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
     const navigate = useNavigate(); // Hook voor navigatie
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // Controleer of de ingevoerde gegevens correct zijn
-        if (email === 'test@gmail.com' && password === '123') {
-            console.log('Succesvol ingelogd');
-            navigate('/landpage'); // Stuur gebruiker door naar Landpage.js
-        } else {
-            console.log('Ongeldige inloggegevens');
-            alert('E-mail of wachtwoord is onjuist. Probeer het opnieuw.');
+        try {
+            const response = await axios.post('http://localhost:3001/users/login', { // Vervang door de URL van je backend API
+                email,
+                password
+            }, {
+                headers: {  
+                    'x-api-key': `${process.env.REACT_APP_API_KEY}` // Voeg je API-sleutel toe aan de headers
+                }
+            });
+
+            console.log('Response status:', response.status);
+
+            if (response.status === 200) {
+                console.log('Succesvol ingelogd', response.data);
+                navigate('/landpage'); // Stuur gebruiker door naar Landpage.js
+            } else {
+                console.log('Ongeldige inloggegevens:', response.data);
+                alert('E-mail of wachtwoord is onjuist. Probeer het opnieuw.');
+            }
+        } catch (error) {
+            console.error('Er is een fout opgetreden:', error);
+            alert('Er is een fout opgetreden. Probeer het later opnieuw.');
         }
     };
 
