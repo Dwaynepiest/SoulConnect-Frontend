@@ -4,9 +4,10 @@ body {
     background-color: #f2f2f2;
     display: flex;
     justify-content: center;
-    align-items: center;
-    height: 200vh;
+    align-items: flex-start; /* Zorg ervoor dat de container aan de bovenkant begint */
+    min-height: 185vh; /* Zorg ervoor dat de body minimaal de volledige hoogte van het scherm inneemt */
     margin: 0;
+    padding: 20px 0; /* Voeg wat padding toe aan de boven- en onderkant */
 }
 
 /* Stijl voor het container van het formulier */
@@ -15,9 +16,10 @@ body {
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 350px;
+    width: 400px;
     text-align: center;
-    margin: 0 auto;
+    margin: 20px auto; /* Voeg wat marge toe aan de boven- en onderkant */
+    height: auto; /* Zorg ervoor dat de container automatisch de hoogte aanpast aan de inhoud */
 }
 
 /* Styling voor de koptekst van het formulier */
@@ -94,4 +96,13 @@ body {
         width: 100%;
         padding: 20px;
     }
+}
+.tempphoto,
+.uploaded-photo,
+.usedphoto {
+    border: 1px solid black !important;
+}
+
+.webcam-video {
+    border: 1px solid black !important;
 }

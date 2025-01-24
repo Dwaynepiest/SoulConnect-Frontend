@@ -231,7 +231,7 @@ const Registreren = () => {
                             )}
                             {tempPhoto && (
                                 <div>
-                                    <img src={tempPhoto} alt="Temporary Face" />
+                                    <img src={tempPhoto} alt="Temporary Face" className='tempphoto'/>
                                     <div className="button-group">
                                         <button type="button" onClick={handleKeepPhoto}>Keep Photo</button>
                                         <button type="button" onClick={handleRetakePhoto}>Retake Photo</button>
@@ -240,7 +240,7 @@ const Registreren = () => {
                             )}
                             {formData.facePhoto && !tempPhoto && (
                                 <div>
-                                    <img src={formData.facePhoto} alt="Face" />
+                                    <img src={formData.facePhoto} alt="Face" className='usedphoto' />
                                     <button type="button" onClick={handleRemovePhoto}>Retake Photo</button>
                                 </div>
                             )}

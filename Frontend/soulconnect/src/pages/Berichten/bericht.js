@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { messages as initialMessages } from './messages'; 
 import './berichten.css';
-import Header from '../../Components/Header/Header';
+import Header from '../../components/Header/Header';
 
 function ChatPage() {
   const { messageId } = useParams(); 

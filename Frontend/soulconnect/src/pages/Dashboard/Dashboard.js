@@ -1,7 +1,7 @@
 import React from 'react';
 import dummyData from './Dashboarddummy';
 import './Dashboard.css';
-import Header from '../../Components/Header/Header';
+import Header from '../../components/Header/Header';
 
 function Dashboard() {
   return (
