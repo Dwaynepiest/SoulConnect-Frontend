@@ -1,0 +1,60 @@
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: crimson;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
+  
+}
+
+.header-logo {
+  padding-top: 0.2vh;
+  padding-left: 0.1vw;
+  height: 60px;
+  cursor: pointer;
+}
+
+.header-nav {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.header-nav a {
+  font-family: serif;
+  color: #000;
+  font-weight: 500;
+}
+
+.header-search {
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  border-radius: 15px;
+  outline: none;
+}
+
+.header-profile {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.header-profile-img {
+  padding-right: vw;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.home-content {
+  margin-top: 100px; 
+  padding: 20px;
+  text-align: center;
+}
