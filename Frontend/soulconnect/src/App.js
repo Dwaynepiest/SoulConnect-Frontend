@@ -5,6 +5,7 @@ import Registreren from './pages/Register/Registreren';
 import ProfielAanmaken from './pages/profiel-aanmaken/profiel-aanmaken'; 
 import BerichtenPagina from './pages/Berichten/berichten';
 import ChatPage from './pages/Berichten/bericht';
+import Dashboard from './pages/Dashboard/Dashboard';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/berichten" element={<BerichtenPagina />}>
           <Route path=":messageId" element={<ChatPage />} />
         </Route>
+        <Route path='/dashboard' element={<Dashboard />} /> 
         
       </Routes>
     </Router>
