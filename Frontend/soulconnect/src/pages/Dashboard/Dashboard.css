@@ -5,13 +5,14 @@
   
 .center {
     text-align: center;
-    color: crimson;
-    
+    color: crimson;   
 }
-  /* section {
-    margin-bottom: 40px;
+  .verder-zoeken {
+    text-align: center;
+    font-family: 'Courier New';
+    color: #007bff;
   }
-   */
+
   .cards-potential {
     height: fit-content;
     display: flex;

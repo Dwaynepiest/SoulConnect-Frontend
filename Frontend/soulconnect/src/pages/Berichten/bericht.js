@@ -1,8 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { messages as initialMessages } from './messages'; 
 import './berichten.css';
 import Header from '../../Components/Header/Header';
+import axios from 'axios';
+
+
+
 
 function ChatPage() {
   const { messageId } = useParams(); 
@@ -16,6 +20,18 @@ function ChatPage() {
   );
 
   const sortedMessages = contactMessages.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+
+  // function gettest() {
+  //   axios
+  //     .get('http://localhost:3001/users')
+  //     .then((response) => {
+  //       console.log('Fetched Data:', response.data);
+  //     })
+  //     .catch((error) => {
+  //       console.error('Error fetching data:', error, "Error met data ophalen van gettest");
+  //     });
+  // }
+  
 
   const handleSendMessage = () => {
     if (newMessage.trim() === '') return;
