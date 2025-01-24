@@ -21,14 +21,14 @@ function Dashboard() {
               <h3>{person.name}</h3>
               <p>{person.gender}</p>
               <p>{person.oneliner}</p>
-              <button>&hearts;</button>
+              <button className='button-like'>&hearts;</button>
             </div>
           ))}
         </div>
       </section>
 
       <section className="potential-section">
-        <h2 className='center'>Mensen die je misschien wel leuk vindt</h2>
+        <h2 className='center-like'>Mensen die je misschien wel leuk vindt</h2>
         <div className="cards-potential">
           {dummyData.potentialMatches.map((person, index) => (
             <div key={index} className="card">

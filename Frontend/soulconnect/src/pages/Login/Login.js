@@ -13,12 +13,12 @@ const Login = () => {
         e.preventDefault();
 
         try {
-            const response = await axios.post('http://localhost:3001/users/login', { // Vervang door de URL van je backend API
+            const response = await axios.post('http://localhost:3001/users/login', {
                 email,
                 password
             }, {
                 headers: {  
-                    'x-api-key': `${process.env.REACT_APP_API_KEY}` // Voeg je API-sleutel toe aan de headers
+                    'x-api-key': `${process.env.REACT_APP_API_KEY}` 
                 }
             });
 

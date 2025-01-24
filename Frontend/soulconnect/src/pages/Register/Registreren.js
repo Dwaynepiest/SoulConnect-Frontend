@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Webcam from 'react-webcam';
-import './Registreren.css';
+import './registreren.css';
 
 const Registreren = () => {
     const [email, setEmail] = useState('');
@@ -28,6 +28,12 @@ const Registreren = () => {
     const [tempPhoto, setTempPhoto] = useState(null);
     const webcamRef = React.useRef(null);
     const navigate = useNavigate();
+
+    useEffect(() => {
+        // Log de geladen CSS-bestanden
+        const stylesheets = Array.from(document.styleSheets).map(sheet => sheet.href).filter(href => href);
+        console.log('Loaded CSS files:', stylesheets);
+    }, []);
 
     const handleChange = (e) => {
         const { name, value, type, checked, files } = e.target;
@@ -102,7 +108,7 @@ const Registreren = () => {
     };
 
     return (
-        <div className="container">
+        <div className="registreren-container">
             <h2>Registreren</h2>
             <form onSubmit={handleSubmit}>
                 {step === 1 && (

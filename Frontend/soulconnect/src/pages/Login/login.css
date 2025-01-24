@@ -1,96 +1,84 @@
-/* Algemene body instellingen */
+/* Algemene styling voor het lichaam */
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f4f7f6;
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
     margin: 0;
+    overflow: hidden;
 }
 
-/* Container voor de login box */
-.login-container {
+/* Stijl voor het container van het formulier */
+#root {
     background-color: #ffffff;
-    padding: 40px;
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     width: 350px;
     text-align: center;
+    margin: 0 auto;
+    height: auto;
 }
 
-/* Titel van de login */
+/* Styling voor de koptekst van het formulier */
 .login-container h2 {
-    margin-bottom: 30px;
-    color: #333333;
-    font-size: 24px;
-}
-
-/* Algemeen ontwerp voor de form groepen */
-.form-group {
     margin-bottom: 20px;
-    text-align: left;
+    color: #333;
 }
 
-/* Labels voor inputs */
-.form-group label {
-    font-size: 14px;
-    color: #666666;
-    display: block;
-    margin-bottom: 5px;
-}
-
-/* Stijl voor de invoervelden */
+/* Stijl voor de formulierelementen (invoervelden) */
 .login-container input[type="email"],
 .login-container input[type="password"] {
-    width: 100%;
-    padding: 12px;
-    margin-top: 5px;
+    width: 94%;
+    padding: 10px;
+    margin: 10px 0;
     border: 1px solid #ccc;
-    border-radius: 8px;
+    border-radius: 5px;
     font-size: 14px;
-    background-color: #f9f9f9;
-    transition: border-color 0.3s ease;
 }
 
-.login-container input[type="email"]:focus,
-.login-container input[type="password"]:focus {
-    border-color: #4CAF50;
-    outline: none;
-}
-
-/* Stijl voor de login button */
-.login-button {
+/* Stijl voor de knoppen */
+.login-container button {
     width: 100%;
-    padding: 12px;
-    background-color: #4CAF50;
+    padding: 10px;
+    margin: 10px 0;
     border: none;
-    border-radius: 8px;
-    color: white;
+    border-radius: 5px;
+    background-color: #4CAF50;
+    color: #fff;
     font-size: 16px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
 }
 
-.login-button:hover {
+.login-container button:hover {
     background-color: #45a049;
 }
 
-/* Links onderaan voor wachtwoord of registratie */
-.links {
-    margin-top: 20px;
+/* Stijl voor foutmeldingen */
+.login-container p.error {
+    color: red;
     font-size: 14px;
+    margin-top: 10px;
 }
 
-.links a {
+/* Styling voor de links (indien aanwezig, bijvoorbeeld "wachtwoord vergeten") */
+.login-container a {
     display: block;
+    margin-top: 10px;
     color: #4CAF50;
     text-decoration: none;
-    margin-top: 10px;
-    transition: color 0.3s ease;
 }
 
-.links a:hover {
-    color: #45a049;
+.login-container a:hover {
     text-decoration: underline;
+}
+
+/* Responsieve styling */
+@media (max-width: 500px) {
+    .login-container {
+        width: 100%;
+        padding: 20px;
+    }
 }
