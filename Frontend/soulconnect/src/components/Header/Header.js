@@ -1,36 +1,33 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './Header.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faBell, faEnvelope } from '@fortawesome/free-solid-svg-icons';
-import { useNavigate } from 'react-router-dom';
-
+import logo from '../../Fotos/28607339435.png'; 
+import berichten from '../../Fotos/comments.png';
 const Header = () => {
-    const [showNotifications, setShowNotifications] = useState(false);
-    const navigate = useNavigate();
-
-    const handleUserClick = () => {
-        navigate('/user-profile'); // Change this to the actual path you want to navigate to
-    };
-
-    const handleBellClick = () => {
-        setShowNotifications(!showNotifications);
-    };
-
     return (
-        <div className="header">
-            <h1>SoulConnect.nl</h1>
-            <div className="icons">
-                <FontAwesomeIcon icon={faUser} className="icon" onClick={handleUserClick} />
-                <FontAwesomeIcon icon={faBell} className="icon" onClick={handleBellClick} />
-                <FontAwesomeIcon icon={faEnvelope} className="icon" />
-            </div>
-            {showNotifications && (
-                <div className="notification-box">
-                    <p>Latest Notifications</p>
-                    {/* Add your notifications here */}
+        <header className="header">
+            <a href="/home">
+            <img src={logo} alt="Soulconnect logo" className="header-logo" />
+                </a>
+
+            
+            <header>Soulconnect</header>
+            <nav className="header-nav">
+                <a href="/">Home</a>
+                <a href="/dashboard">Dashboard</a>
+                <a href="/berichten">
+                    <img 
+                        src={berichten} 
+                        alt="Berichten icon" 
+                        className="berichten-icon" 
+                    />
+                </a>
+                <input type="text" placeholder="Search" className="header-search" />
+                <div className="header-profile">
+                    <span>Gebruiker</span>
+                    <img src="" alt="Profiel" className="header-profile-img" />
                 </div>
-            )}
-        </div>
+            </nav>
+        </header>
     );
 };
 
