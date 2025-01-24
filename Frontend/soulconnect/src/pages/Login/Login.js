@@ -26,7 +26,7 @@ const Login = () => {
 
             if (response.status === 200) {
                 console.log('Succesvol ingelogd', response.data);
-                navigate('/landpage'); // Stuur gebruiker door naar Landpage.js
+                navigate('/home'); // Stuur gebruiker door naar Landpage.js
             } else {
                 console.log('Ongeldige inloggegevens:', response.data);
                 alert('E-mail of wachtwoord is onjuist. Probeer het opnieuw.');
