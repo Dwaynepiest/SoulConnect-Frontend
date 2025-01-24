@@ -4,7 +4,10 @@ import Login from './pages/Login/Login';
 import Registreren from './pages/Register/Registreren';
 import Home from './pages/Home/Home';
 
-
+import ProfielAanmaken from './pages/profiel-aanmaken/profiel-aanmaken'; 
+import BerichtenPagina from './pages/Berichten/berichten';
+import ChatPage from './pages/Berichten/bericht';
+import Dashboard from './pages/Dashboard/Dashboard';
 
 function App() {
   return (
@@ -14,6 +17,12 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Registreren />} />
         <Route path="/home" element={<Home />} />
+        <Route path="/profiel-aanmaken" element={<ProfielAanmaken />} />
+        <Route path="/berichten" element={<BerichtenPagina />}>
+        <Route path=":messageId" element={<ChatPage />} />
+        </Route>
+        <Route path='/dashboard' element={<Dashboard />} /> 
+        
       </Routes>
     </Router>
   );
