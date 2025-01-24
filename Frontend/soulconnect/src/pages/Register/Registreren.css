@@ -5,71 +5,93 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: 200vh;
     margin: 0;
 }
 
 /* Stijl voor het container van het formulier */
-.login-container {
+.container {
     background-color: #ffffff;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     width: 350px;
     text-align: center;
+    margin: 0 auto;
 }
 
 /* Styling voor de koptekst van het formulier */
-.login-container h2 {
+.container h2 {
     margin-bottom: 20px;
-    color: #333333;
+    color: #333;
 }
 
 /* Stijl voor de formulierelementen (invoervelden) */
-.login-container input[type="email"],
-.login-container input[type="password"],
-.login-container input[type="date"] {
+.container input[type="email"],
+.container input[type="password"],
+.container input[type="date"],
+.container input[type="text"],
+.container textarea,
+.container select {
     width: 94%;
     padding: 10px;
     margin: 10px 0;
-    border: 1px solid #cccccc;
+    border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 14px;
-    justify-content: center;
 }
 
-/* Stijl voor de knop */
-.login-container button {
+/* Stijl voor de knoppen */
+.container button {
     width: 100%;
     padding: 10px;
-    background-color: #4CAF50;
+    margin: 10px 0;
     border: none;
     border-radius: 5px;
-    color: white;
+    background-color: #4CAF50;
+    color: #fff;
     font-size: 16px;
     cursor: pointer;
 }
 
-/* Hover effect voor de knop */
-.login-container button:hover {
+.container button:hover {
     background-color: #45a049;
 }
 
-/* Foutmelding stijl */
-.login-container p {
+/* Stijl voor foutmeldingen */
+.container p.error {
     color: red;
     font-size: 14px;
     margin-top: 10px;
 }
 
 /* Styling voor de links (indien aanwezig, bijvoorbeeld "wachtwoord vergeten") */
-.login-container a {
+.container a {
     display: block;
     margin-top: 10px;
     color: #4CAF50;
     text-decoration: none;
 }
 
-.login-container a:hover {
+.container a:hover {
     text-decoration: underline;
+}
+
+/* Specifiek voor optionele velden */
+.checkbox-group div {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.checkbox-group div:last-child {
+    margin-bottom: 0;
+}
+
+/* Responsieve styling */
+@media (max-width: 500px) {
+    .container {
+        width: 100%;
+        padding: 20px;
+    }
 }
