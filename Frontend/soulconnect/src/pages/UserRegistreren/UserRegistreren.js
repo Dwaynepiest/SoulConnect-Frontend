@@ -44,6 +44,24 @@ const UserRegistreren = () => {
             setError('');
             setStep(2);
         } else {
+            // Validatie van de herhaalde e-mail en wachtwoord
+            if (repeatEmail !== email) {
+                setError('Herhaalde e-mail komt niet overeen met de oorspronkelijke e-mail');
+                return;
+            }
+
+            if (repeatPassword !== password) {
+                setError('Herhaald wachtwoord komt niet overeen met het oorspronkelijke wachtwoord');
+                return;
+            }
+
+            // Validatie van de postcode
+            const postcodePattern = /^[1-9][0-9]{3}[A-Z]{2}$/i;
+            if (!postcodePattern.test(postcode)) {
+                setError('Voer een geldige Nederlandse postcode in (bijv. 1234AB)');
+                return;
+            }
+
             // Voeg hier je profiel aanmaken logica toe
             console.log('Profiel aanmaken:', { repeatEmail, repeatPassword, postcode, gender, nickname, oneliner, profilePicture, bio, interests, interestedInGender, relationshipType });
             navigate('/home');
