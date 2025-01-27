@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, Outlet } from 'react-router-dom'; 
 import { messages } from './messages'; 
 import './berichten.css';
-import Header from '../../Components/Header/Header';
+import Header from '../../components/Header/Header';
 
 function BerichtenPagina() {
   const [messagesData, setMessagesData] = useState([]);

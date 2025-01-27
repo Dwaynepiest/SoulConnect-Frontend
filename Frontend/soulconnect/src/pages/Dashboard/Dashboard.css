@@ -48,8 +48,8 @@
     margin: 0 auto 10px;
   }
   
-  button {
-    background: #ff4b5c;
+  .button {
+    background: black;
     color: white;
     border: none;
     padding: 10px 20px;
@@ -57,7 +57,7 @@
     cursor: pointer;
   }
   
-  button:hover {
+  button-like:hover {
     background: #ff2e3a;
   }
   
