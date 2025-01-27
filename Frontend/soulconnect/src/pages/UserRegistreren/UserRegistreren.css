@@ -19,7 +19,8 @@ body {
     width: 350px;
     text-align: center;
     margin: 0 auto;
-    height: auto;
+    height: 70vh; /* Stel een vaste hoogte in */
+    overflow-y: auto; /* Maak verticale scrollbaarheid mogelijk */
 }
 
 /* Styling voor de koptekst van het formulier */
@@ -33,6 +34,7 @@ body {
 .container input[type="password"],
 .container input[type="date"],
 .container input[type="text"],
+.container input[type="file"],
 .container textarea,
 .container select {
     width: 94%;

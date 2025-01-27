@@ -9,6 +9,14 @@ const UserRegistreren = () => {
     const [profilePicture, setProfilePicture] = useState('');
     const [bio, setBio] = useState('');
     const [interests, setInterests] = useState('');
+    const [repeatEmail, setRepeatEmail] = useState('');
+    const [repeatPassword, setRepeatPassword] = useState('');
+    const [postcode, setPostcode] = useState('');
+    const [gender, setGender] = useState('');
+    const [nickname, setNickname] = useState('');
+    const [oneliner, setOneliner] = useState('');
+    const [interestedInGender, setInterestedInGender] = useState('');
+    const [relationshipType, setRelationshipType] = useState('');
     const [error, setError] = useState('');
     const [step, setStep] = useState(1);
     const navigate = useNavigate();
@@ -37,7 +45,7 @@ const UserRegistreren = () => {
             setStep(2);
         } else {
             // Voeg hier je profiel aanmaken logica toe
-            console.log('Profiel aanmaken:', { profilePicture, bio, interests });
+            console.log('Profiel aanmaken:', { repeatEmail, repeatPassword, postcode, gender, nickname, oneliner, profilePicture, bio, interests, interestedInGender, relationshipType });
             navigate('/home');
         }
     };
@@ -88,6 +96,70 @@ const UserRegistreren = () => {
                     <h2>Profiel Aanmaken</h2>
                     <form onSubmit={handleSubmit}>
                         <div className="form-group">
+                            <label htmlFor="repeatEmail">Herhaal E-mail:</label>
+                            <input
+                                type="email"
+                                id="repeatEmail"
+                                value={repeatEmail}
+                                onChange={(e) => setRepeatEmail(e.target.value)}
+                                required
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="repeatPassword">Herhaal Wachtwoord:</label>
+                            <input
+                                type="password"
+                                id="repeatPassword"
+                                value={repeatPassword}
+                                onChange={(e) => setRepeatPassword(e.target.value)}
+                                required
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="postcode">Postcode:</label>
+                            <input
+                                type="text"
+                                id="postcode"
+                                value={postcode}
+                                onChange={(e) => setPostcode(e.target.value)}
+                                required
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="gender">Geslacht:</label>
+                            <select
+                                id="gender"
+                                value={gender}
+                                onChange={(e) => setGender(e.target.value)}
+                                required
+                            >
+                                <option value="">Selecteer je geslacht</option>
+                                <option value="male">Man</option>
+                                <option value="female">Vrouw</option>
+                                <option value="other">Anders</option>
+                            </select>
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="nickname">Nickname:</label>
+                            <input
+                                type="text"
+                                id="nickname"
+                                value={nickname}
+                                onChange={(e) => setNickname(e.target.value)}
+                                required
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="oneliner">Oneliner:</label>
+                            <input
+                                type="text"
+                                id="oneliner"
+                                value={oneliner}
+                                onChange={(e) => setOneliner(e.target.value)}
+                                required
+                            />
+                        </div>
+                        <div className="form-group">
                             <label htmlFor="profilePicture">Profielfoto:</label>
                             <input
                                 type="file"
@@ -97,7 +169,7 @@ const UserRegistreren = () => {
                             />
                         </div>
                         <div className="form-group">
-                            <label htmlFor="bio">Bio:</label>
+                            <label htmlFor="bio">Biografie:</label>
                             <textarea
                                 id="bio"
                                 value={bio}
@@ -114,6 +186,34 @@ const UserRegistreren = () => {
                                 onChange={(e) => setInterests(e.target.value)}
                                 required
                             />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="interestedInGender">Geslacht waarin je geïnteresseerd bent:</label>
+                            <select
+                                id="interestedInGender"
+                                value={interestedInGender}
+                                onChange={(e) => setInterestedInGender(e.target.value)}
+                                required
+                            >
+                                <option value="">Selecteer</option>
+                                <option value="male">Man</option>
+                                <option value="female">Vrouw</option>
+                                <option value="other">Anders</option>
+                            </select>
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="relationshipType">Soort relatie waarin je geïnteresseerd bent:</label>
+                            <select
+                                id="relationshipType"
+                                value={relationshipType}
+                                onChange={(e) => setRelationshipType(e.target.value)}
+                                required
+                            >
+                                <option value="">Selecteer</option>
+                                <option value="serious">Serieus</option>
+                                <option value="friendly">Vriendschappelijk</option>
+                                <option value="fwb">FWB</option>
+                            </select>
                         </div>
                         <button type="submit">Profiel Aanmaken</button>
                     </form>
