@@ -1,0 +1,90 @@
+/* Algemene styling voor het lichaam */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    overflow: hidden;
+}
+
+/* Stijl voor het container van het formulier */
+.container {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 350px;
+    text-align: center;
+    margin: 0 auto;
+    height: 70vh; /* Stel een vaste hoogte in */
+    overflow-y: auto; /* Maak verticale scrollbaarheid mogelijk */
+}
+
+/* Styling voor de koptekst van het formulier */
+.container h2 {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* Stijl voor de formulierelementen (invoervelden) */
+.container input[type="email"],
+.container input[type="password"],
+.container input[type="date"],
+.container input[type="text"],
+.container input[type="file"],
+.container textarea,
+.container select {
+    width: 94%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+/* Stijl voor de knoppen */
+.container button {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 5px;
+    background-color: #4CAF50;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.container button:hover {
+    background-color: #45a049;
+}
+
+/* Stijl voor foutmeldingen */
+.container p.error {
+    color: red;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+/* Styling voor de links (indien aanwezig, bijvoorbeeld "wachtwoord vergeten") */
+.container a {
+    display: block;
+    margin-top: 10px;
+    color: #4CAF50;
+    text-decoration: none;
+}
+
+.container a:hover {
+    text-decoration: underline;
+}
+
+/* Responsieve styling */
+@media (max-width: 500px) {
+    .container {
+        width: 100%;
+        padding: 20px;
+    }
+}
