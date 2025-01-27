@@ -1,28 +1,30 @@
 /* Algemene body instellingen */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f4f7f6;
+    background-color: #f2f2f2;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
     margin: 0;
+    overflow: hidden;
 }
 
 /* Container voor de login box */
 .login-container {
-    background-color: #ffffff;
+    background-color: #b30000; /* Donkerrode kleur voor een liefdevolle stijl */
     padding: 40px;
     border-radius: 12px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
     width: 350px;
     text-align: center;
+    overflow-y: auto; /* Maak verticale scrollbaarheid mogelijk */
 }
 
 /* Titel van de login */
 .login-container h2 {
     margin-bottom: 30px;
-    color: #333333;
+    color: #ffccd5; /* Lichte rode kleur voor de koptekst */
     font-size: 24px;
 }
 
@@ -34,8 +36,8 @@ body {
 
 /* Labels voor inputs */
 .form-group label {
+    color: #ffffff; /* Witte kleur voor de tekst boven de invoervelden */
     font-size: 14px;
-    color: #666666;
     display: block;
     margin-bottom: 5px;
 }
@@ -43,19 +45,19 @@ body {
 /* Stijl voor de invoervelden */
 .login-container input[type="email"],
 .login-container input[type="password"] {
-    width: 100%;
+    width: 93%;
     padding: 12px;
     margin-top: 5px;
-    border: 1px solid #ccc;
+    border: 1px solid #ffccd5; /* Lichte rode kleur voor de rand */
     border-radius: 8px;
     font-size: 14px;
-    background-color: #f9f9f9;
+    background-color: #ffe6e6; /* Lichte achtergrondkleur voor invoervelden */
     transition: border-color 0.3s ease;
 }
 
 .login-container input[type="email"]:focus,
 .login-container input[type="password"]:focus {
-    border-color: #4CAF50;
+    border-color: #ffccd5; /* Lichte rode kleur voor de focus rand */
     outline: none;
 }
 
@@ -63,17 +65,17 @@ body {
 .login-button {
     width: 100%;
     padding: 12px;
-    background-color: #4CAF50;
+    background-color: #ffccd5; /* Lichte rode kleur voor de knoppen */
     border: none;
     border-radius: 8px;
-    color: white;
+    color: #b30000; /* Donkerrode kleur voor de tekst op de knoppen */
     font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
 .login-button:hover {
-    background-color: #45a049;
+    background-color: #ffe6e6; /* Nog lichtere rode kleur voor hover effect */
 }
 
 /* Links onderaan voor wachtwoord of registratie */
@@ -84,13 +86,13 @@ body {
 
 .links a {
     display: block;
-    color: #4CAF50;
+    color: #ffccd5; /* Lichte rode kleur voor de links */
     text-decoration: none;
     margin-top: 10px;
     transition: color 0.3s ease;
 }
 
 .links a:hover {
-    color: #45a049;
+    color: #ffe6e6; /* Nog lichtere rode kleur voor hover effect */
     text-decoration: underline;
 }

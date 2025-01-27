@@ -1,7 +1,7 @@
 /* Algemene styling voor het lichaam */
 body {
     font-family: Arial, sans-serif;
-    background-color: #f2f2f2;
+    background-color: #ffe2e2;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -12,21 +12,21 @@ body {
 
 /* Stijl voor het container van het formulier */
 .container {
-    background-color: #ffffff;
+    background-color: #b30000; /* Donkerrode kleur voor een liefdevolle stijl */
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     width: 350px;
     text-align: center;
     margin: 0 auto;
-    height: 70vh; /* Stel een vaste hoogte in */
+    height: 60vh; /* Stel een vaste hoogte in */
     overflow-y: auto; /* Maak verticale scrollbaarheid mogelijk */
 }
 
 /* Styling voor de koptekst van het formulier */
 .container h2 {
     margin-bottom: 20px;
-    color: #333;
+    color: #ffccd5; /* Lichte rode kleur voor de koptekst */
 }
 
 /* Stijl voor de formulierelementen (invoervelden) */
@@ -40,9 +40,18 @@ body {
     width: 94%;
     padding: 10px;
     margin: 10px 0;
-    border: 1px solid #ccc;
+    border: 1px solid #ffccd5; /* Lichte rode kleur voor de rand */
     border-radius: 5px;
     font-size: 14px;
+    background-color: #ffe6e6; /* Lichte achtergrondkleur voor invoervelden */
+}
+
+/* Stijl voor de labels boven de invoervelden */
+.container label {
+    color: #ffffff; /* Witte kleur voor de tekst boven de invoervelden */
+    font-size: 14px;
+    display: block;
+    margin-bottom: 5px;
 }
 
 /* Stijl voor de knoppen */
@@ -52,14 +61,14 @@ body {
     margin: 10px 0;
     border: none;
     border-radius: 5px;
-    background-color: #4CAF50;
-    color: #fff;
+    background-color: #ffccd5; /* Lichte rode kleur voor de knoppen */
+    color: #b30000; /* Donkerrode kleur voor de tekst op de knoppen */
     font-size: 16px;
     cursor: pointer;
 }
 
 .container button:hover {
-    background-color: #45a049;
+    background-color: #ffe6e6; /* Nog lichtere rode kleur voor hover effect */
 }
 
 /* Stijl voor foutmeldingen */
@@ -73,7 +82,7 @@ body {
 .container a {
     display: block;
     margin-top: 10px;
-    color: #4CAF50;
+    color: #ffccd5; /* Lichte rode kleur voor de links */
     text-decoration: none;
 }
 
