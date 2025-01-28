@@ -1,32 +1,47 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import './UserRegistreren.css';
 
 const UserRegistreren = () => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [dob, setDob] = useState('');
-    const [profilePicture, setProfilePicture] = useState('');
-    const [bio, setBio] = useState('');
-    const [interests, setInterests] = useState('');
-    const [repeatEmail, setRepeatEmail] = useState('');
-    const [repeatPassword, setRepeatPassword] = useState('');
-    const [postcode, setPostcode] = useState('');
-    const [gender, setGender] = useState('');
-    const [nickname, setNickname] = useState('');
-    const [oneliner, setOneliner] = useState('');
-    const [interestedInGender, setInterestedInGender] = useState('');
-    const [relationshipType, setRelationshipType] = useState('');
-    const [error, setError] = useState('');
+    const [formData, setFormData] = useState({
+        email: '',
+        password: '',
+        birth_date: '',
+        repeatEmail: '',
+        repeatPassword: '',
+        gender: '',
+        nickname: '',
+        zip_code: '',
+        accept_service: false,
+        one_liner: '',
+        relationshipType: '',
+        hobby: '',
+        bio: '',
+        job: '',
+        education: '',
+        profilePicture: null,
+        interestedInGender: ''
+    });
     const [step, setStep] = useState(1);
+    const [error, setError] = useState('');
     const navigate = useNavigate();
 
-    const handleSubmit = (e) => {
+    const handleChange = (e) => {
+        const { id, value, type, checked } = e.target;
+        setFormData(prevState => ({
+            ...prevState,
+            [id]: type === 'checkbox' ? checked : value
+        }));
+    };
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         if (step === 1) {
+            // Step 1 validation
             const today = new Date();
-            const birthDate = new Date(dob);
+            const birthDate = new Date(formData.birth_date);
             const age = today.getFullYear() - birthDate.getFullYear();
             const month = today.getMonth() - birthDate.getMonth();
 
@@ -36,35 +51,75 @@ const UserRegistreren = () => {
             }
 
             const passwordPattern = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{16,}$/;
-            if (!passwordPattern.test(password)) {
+            if (!passwordPattern.test(formData.password)) {
                 setError('Wachtwoord voldoet niet aan de vereisten: minimaal 16 karakters, 1 hoofdletter, 1 cijfer en 1 speciaal teken');
                 return;
             }
 
-            setError('');
-            setStep(2);
-        } else {
-            // Validatie van de herhaalde e-mail en wachtwoord
-            if (repeatEmail !== email) {
+            try {
+                const response = await axios.post('http://localhost:3001/users', {
+                    email: formData.email,
+                    password: formData.password,
+                    birth_date: formData.birth_date,
+                    gender: formData.gender,
+                    nickname: formData.nickname,
+                    zip_code: formData.zip_code,
+                    accept_service: formData.accept_service
+                });
+
+                if (response.status === 200) {
+                    localStorage.setItem('userId', response.data.userId); 
+                    setStep(2);
+                } else {
+                    setError('Er is een fout opgetreden bij het registreren.');
+                }
+            } catch (error) {
+                setError('Er is een fout opgetreden bij het registreren.');
+            }
+        } else if (step === 2) {
+            // Step 2 validation
+            if (formData.repeatEmail !== formData.email) {
                 setError('Herhaalde e-mail komt niet overeen met de oorspronkelijke e-mail');
                 return;
             }
 
-            if (repeatPassword !== password) {
+            if (formData.repeatPassword !== formData.password) {
                 setError('Herhaald wachtwoord komt niet overeen met het oorspronkelijke wachtwoord');
                 return;
             }
 
-            // Validatie van de postcode
             const postcodePattern = /^[1-9][0-9]{3}[A-Z]{2}$/i;
-            if (!postcodePattern.test(postcode)) {
+            if (!postcodePattern.test(formData.zip_code)) {
                 setError('Voer een geldige Nederlandse postcode in (bijv. 1234AB)');
                 return;
             }
 
-            // Voeg hier je profiel aanmaken logica toe
-            console.log('Profiel aanmaken:', { repeatEmail, repeatPassword, postcode, gender, nickname, oneliner, profilePicture, bio, interests, interestedInGender, relationshipType });
-            navigate('/home');
+            setStep(3);
+        } else if (step === 3) {
+            // Step 3: Send data
+            try {
+                const userId = localStorage.getItem('userId');
+                const form = new FormData();
+                Object.keys(formData).forEach(key => {
+                    form.append(key, formData[key]);
+                });
+
+                form.append('userId', userId);
+
+                const response = await axios.post('http://localhost:3001/extra', form, {
+                    headers: {
+                        'x-api-key': process.env.REACT_APP_API_KEY
+                    }
+                });
+
+                if (response.status === 200) {
+                    navigate('/dashboard');
+                } else {
+                    setError('Er is een fout opgetreden bij het verzenden van de gegevens.');
+                }
+            } catch (error) {
+                setError('Er is een fout opgetreden bij het verzenden van de gegevens.');
+            }
         }
     };
 
@@ -79,8 +134,8 @@ const UserRegistreren = () => {
                             <input
                                 type="email"
                                 id="email"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
+                                value={formData.email}
+                                onChange={handleChange}
                                 required
                             />
                         </div>
@@ -89,37 +144,83 @@ const UserRegistreren = () => {
                             <input
                                 type="password"
                                 id="password"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
+                                value={formData.password}
+                                onChange={handleChange}
                                 required
                             />
                         </div>
                         <div className="form-group">
-                            <label htmlFor="dob">Geboortedatum:</label>
+                            <label htmlFor="birth_date">Geboortedatum:</label>
                             <input
                                 type="date"
-                                id="dob"
-                                value={dob}
-                                onChange={(e) => setDob(e.target.value)}
+                                id="birth_date"
+                                value={formData.birth_date}
+                                onChange={handleChange}
                                 required
                             />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="gender">Geslacht:</label>
+                            <select
+                                id="gender"
+                                value={formData.gender}
+                                onChange={handleChange}
+                                required
+                            >
+                                <option value="">Selecteer je geslacht</option>
+                                <option value="male">Man</option>
+                                <option value="female">Vrouw</option>
+                            </select>
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="zip_code">Postcode:</label>
+                            <input
+                                type="text"
+                                id="zip_code"
+                                value={formData.zip_code}
+                                onChange={handleChange}
+                                required
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="nickname">Nickname:</label>
+                            <input
+                                type="text"
+                                id="nickname"
+                                value={formData.nickname}
+                                onChange={handleChange}
+                                required
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="accept_service">
+                                <input
+                                    type="checkbox"
+                                    id="accept_service"
+                                    checked={formData.accept_service}
+                                    onChange={handleChange}
+                                    required
+                                />
+                                Ik ga akkoord met de servicevoorwaarden
+                            </label>
                         </div>
                         <button type="submit">Volgende</button>
                     </form>
                     {error && <p>{error}</p>}
                 </>
             )}
+
             {step === 2 && (
                 <>
-                    <h2>Profiel Aanmaken</h2>
+                    <h2>Relatie en voorkeuren</h2>
                     <form onSubmit={handleSubmit}>
                         <div className="form-group">
                             <label htmlFor="repeatEmail">Herhaal E-mail:</label>
                             <input
                                 type="email"
                                 id="repeatEmail"
-                                value={repeatEmail}
-                                onChange={(e) => setRepeatEmail(e.target.value)}
+                                value={formData.repeatEmail}
+                                onChange={handleChange}
                                 required
                             />
                         </div>
@@ -128,112 +229,82 @@ const UserRegistreren = () => {
                             <input
                                 type="password"
                                 id="repeatPassword"
-                                value={repeatPassword}
-                                onChange={(e) => setRepeatPassword(e.target.value)}
+                                value={formData.repeatPassword}
+                                onChange={handleChange}
                                 required
                             />
                         </div>
                         <div className="form-group">
-                            <label htmlFor="postcode">Postcode:</label>
+                            <label htmlFor="one_liner">Oneliner:</label>
                             <input
                                 type="text"
-                                id="postcode"
-                                value={postcode}
-                                onChange={(e) => setPostcode(e.target.value)}
+                                id="one_liner"
+                                value={formData.one_liner}
+                                onChange={handleChange}
                                 required
                             />
                         </div>
                         <div className="form-group">
-                            <label htmlFor="gender">Geslacht:</label>
-                            <select
-                                id="gender"
-                                value={gender}
-                                onChange={(e) => setGender(e.target.value)}
-                                required
-                            >
-                                <option value="">Selecteer je geslacht</option>
-                                <option value="male">Man</option>
-                                <option value="female">Vrouw</option>
-                                <option value="other">Anders</option>
-                            </select>
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="nickname">Nickname:</label>
-                            <input
-                                type="text"
-                                id="nickname"
-                                value={nickname}
-                                onChange={(e) => setNickname(e.target.value)}
-                                required
-                            />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="oneliner">Oneliner:</label>
-                            <input
-                                type="text"
-                                id="oneliner"
-                                value={oneliner}
-                                onChange={(e) => setOneliner(e.target.value)}
-                                required
-                            />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="profilePicture">Profielfoto:</label>
-                            <input
-                                type="file"
-                                id="profilePicture"
-                                onChange={(e) => setProfilePicture(e.target.files[0])}
-                                required
-                            />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="bio">Biografie:</label>
-                            <textarea
-                                id="bio"
-                                value={bio}
-                                onChange={(e) => setBio(e.target.value)}
-                                required
-                            />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="interests">Interesses:</label>
-                            <input
-                                type="text"
-                                id="interests"
-                                value={interests}
-                                onChange={(e) => setInterests(e.target.value)}
-                                required
-                            />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="interestedInGender">Geslacht waarin je geïnteresseerd bent:</label>
-                            <select
-                                id="interestedInGender"
-                                value={interestedInGender}
-                                onChange={(e) => setInterestedInGender(e.target.value)}
-                                required
-                            >
-                                <option value="">Selecteer</option>
-                                <option value="male">Man</option>
-                                <option value="female">Vrouw</option>
-                                <option value="other">Anders</option>
-                            </select>
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="relationshipType">Soort relatie waarin je geïnteresseerd bent:</label>
+                            <label htmlFor="relationshipType">Soort relatie:</label>
                             <select
                                 id="relationshipType"
-                                value={relationshipType}
-                                onChange={(e) => setRelationshipType(e.target.value)}
+                                value={formData.relationshipType}
+                                onChange={handleChange}
                                 required
                             >
                                 <option value="">Selecteer</option>
-                                <option value="serious">Serieus</option>
-                                <option value="friendly">Vriendschappelijk</option>
+                                <option value="fr">Vriendschappelijke Relatie</option>
+                                <option value="or">Open Relatie</option>
                                 <option value="fwb">FWB</option>
                             </select>
                         </div>
-                        <button type="submit">Profiel Aanmaken</button>
+                        <button type="submit">Volgende</button>
+                    </form>
+                    {error && <p>{error}</p>}
+                </>
+            )}
+
+            {step === 3 && (
+                <>
+                    <h2>Extra Profiel Informatie</h2>
+                    <form onSubmit={handleSubmit}>
+                        <div className="form-group">
+                            <label htmlFor="hobby">Hobby's:</label>
+                            <textarea
+                                id="hobby"
+                                value={formData.hobby}
+                                onChange={handleChange}
+                                required
+                            ></textarea>
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="bio">Over jou:</label>
+                            <textarea
+                                id="bio"
+                                value={formData.bio}
+                                onChange={handleChange}
+                                required
+                            ></textarea>
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="job">Werkzaam:</label>
+                            <textarea
+                                id="job"
+                                value={formData.job}
+                                onChange={handleChange}
+                                required
+                            ></textarea>
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="education">Educatie:</label>
+                            <textarea
+                                id="education"
+                                value={formData.education}
+                                onChange={handleChange}
+                                required
+                            ></textarea>
+                        </div>
+                        <button type="submit">Bevestigen</button>
                     </form>
                     {error && <p>{error}</p>}
                 </>

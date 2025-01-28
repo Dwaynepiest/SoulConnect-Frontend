@@ -1,3 +1,14 @@
+.body {
+    font-family: Arial, sans-serif;
+    background-color: #ffe2e2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    overflow-y: scroll;
+}
+
 .dashboard {
     padding-top: 10vh;
     height: 100vh;

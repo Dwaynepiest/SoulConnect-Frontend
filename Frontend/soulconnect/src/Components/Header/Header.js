@@ -5,7 +5,7 @@ import berichten from '../../Fotos/comments.png';
 const Header = () => {
     return (
         <header className="header">
-            <a href="/home">
+            <a href="/dashboard">
             <img src={logo} alt="Soulconnect logo" className="header-logo" />
                 </a>
 
