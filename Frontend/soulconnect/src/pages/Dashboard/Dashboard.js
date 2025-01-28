@@ -4,7 +4,7 @@ import './Dashboard.css';
 import Header from '../../Components/Header/Header';
 
 function Dashboard() {
- // ingelogd als gebruiker 3 
+  // Ingelogd als gebruiker 3
   const currentUserId = 3;
 
   const handleLike = (likedUser) => {
@@ -13,8 +13,8 @@ function Dashboard() {
       likedUserId: likedUser.id,
     };
 
-    console.log("request body", reqbody);
-    console.log("liked user id:", likedUser.id);
+    console.log('request body', reqbody);
+    console.log('liked user id:', likedUser.id);
   };
 
   return (
@@ -29,7 +29,7 @@ function Dashboard() {
           <div className="cards-liked">
             {dummyData.liked.slice(-5).reverse().map((person, index) => (
               <div key={index} className="card">
-                <div className="avatar"></div>
+                <img src={person.avatar} alt={`${person.name}'s avatar`} className="avatar" />
                 <h3>{person.name}</h3>
                 <p>{person.gender}</p>
                 <p>{person.oneliner}</p>
@@ -37,7 +37,9 @@ function Dashboard() {
               </div>
             ))}
           </div>
-          <a href="/likedyou" className="see-more-button">Verder zoeken</a>
+          <a href="/likedyou" className="see-more-button">
+            Verder zoeken
+          </a>
         </section>
 
         <section className="potential-section">
@@ -45,7 +47,7 @@ function Dashboard() {
           <div className="cards-potential">
             {dummyData.potentialMatches.slice(0, 5).map((person, index) => (
               <div key={index} className="card">
-                <div className="avatar"></div>
+                <img src={person.avatar} alt={`${person.name}'s avatar`} className="avatar" />
                 <h3>{person.name}</h3>
                 <p>{person.gender}</p>
                 <p>{person.oneliner}</p>
@@ -53,7 +55,9 @@ function Dashboard() {
               </div>
             ))}
           </div>
-          <a href="/zoeken" className="see-more-button">Verder zoeken</a>
+          <a href="/zoeken" className="see-more-button">
+            Verder zoeken
+          </a>
         </section>
       </div>
     </>

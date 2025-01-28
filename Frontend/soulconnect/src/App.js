@@ -5,6 +5,7 @@ import UserRegistreren from './pages/UserRegistreren/UserRegistreren';
 import BerichtenPagina from './pages/Berichten/berichten';
 import ChatPage from './pages/Berichten/bericht';
 import Dashboard from './pages/Dashboard/Dashboard';
+import Home from './pages/Home/Home';
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/login" element={<Login />} />
+        <Route path='home' element={<Home/>}/>
         <Route path="/register" element={<UserRegistreren />} />
         <Route path="/berichten" element={<BerichtenPagina />}>
           <Route path=":messageId" element={<ChatPage />} />
