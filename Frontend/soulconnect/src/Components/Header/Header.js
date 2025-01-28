@@ -12,7 +12,7 @@ const Header = () => {
             
             <header>Soulconnect</header>
             <nav className="header-nav">
-                <a href="/">Home</a>
+                <a href="/home">Home</a>
                 <a href="/dashboard">Dashboard</a>
                 <a href="/berichten">
                     <img 
@@ -24,7 +24,6 @@ const Header = () => {
                 <input type="text" placeholder="Search" className="header-search" />
                 <div className="header-profile">
                     <span>Gebruiker</span>
-                    <img src="" alt="Profiel" className="header-profile-img" />
                 </div>
             </nav>
         </header>
