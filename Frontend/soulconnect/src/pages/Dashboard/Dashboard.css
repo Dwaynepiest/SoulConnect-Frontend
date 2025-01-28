@@ -1,72 +1,85 @@
 .dashboard {
-    padding-top: 10vh;
-    height: 100vh;
+  padding-top: 80px; /* Keeps space for the fixed header */
+  overflow-y: auto;  /* Allows scrolling if content exceeds the screen size */
+  height: 100vh; /* Ensures the dashboard takes full viewport height */
+  box-sizing: border-box; /* Ensures padding doesn't cause overflow */
+  padding-bottom: 20px; /* Space at the bottom to avoid content getting hidden */
 }
 
-  
-.center {
-    text-align: center;
-    color: crimson;   
+.cards-liked,
+.cards-potential {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
 }
-  .verder-zoeken {
-    text-align: center;
-    font-family: 'Courier New';
-    color: #007bff;
-  }
 
-  .cards-potential {
-    height: fit-content;
-    display: flex;
-    gap: 5px;
-    justify-content: center;
-    flex-flow: row;
-    flex-wrap: wrap;
-  }
-  
-  .cards-liked {
-    height: fit-content;
-    display: flex;
-    gap: 5px;
-    justify-content: center;
-    flex-flow: row;
-    flex-wrap: wrap;
-  }
-  .card {
-    background: #fff;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    padding: 15px;
-    width: 200px;
-    text-align: center;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  }
-  
-  .card .avatar {
-    background: #ccc;
-    height: 100px;
-    width: 100px;
-    border-radius: 50%;
-    margin: 0 auto 10px;
-  }
-  
-  button {
-    background: #ff4b5c;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  button:hover {
-    background: #ff2e3a;
-  }
-  
-  .see-more {
-    color: #007bff;
-    text-decoration: none;
-  }
-  
-  .see-more:hover {
-    text-decoration: underline;
-  }
+.card {
+  background: #f9f9f9;
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  width: 200px;
+  flex-shrink: 0;
+}
+
+.filter-section {
+  top: 80px;
+  z-index: 100;
+  background-color: white;
+  padding: 10px 0;
+}
+
+.action-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.action-button {
+  padding: 10px 15px;
+  border: 2px solid transparent; /* Transparent border for smoother hover effects */
+  border-radius: 5px;
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f1f1f1;
+  transition: all 0.3s ease;
+  width: 120px;
+}
+
+.action-button:hover {
+  background-color: #ffebc6;
+}
+
+.action-button:active {
+  transform: scale(0.98);
+}
+
+/* Like button styles */
+.action-button.like {
+  color: #ff5b5b; /* Red color for heart */
+  border-color: #ff5b5b;
+}
+
+.action-button.like:hover {
+  background-color: #ffe2e2;
+}
+
+/* Dislike button styles */
+.action-button.dislike {
+  color: #4caf50; /* Green color for cross */
+  border-color: #4caf50;
+}
+
+.action-button.dislike:hover {
+  background-color: #e2f7e2;
+}
+
+/* Icon styling */
+.icon {
+  margin-right: 5px;
+}
