@@ -1,0 +1,99 @@
+/* Algemene styling voor het lichaam */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #ffe2e2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    overflow: hidden;
+}
+
+/* Stijl voor het container van het formulier */
+.container {
+    background-color: #b30000; /* Donkerrode kleur voor een liefdevolle stijl */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 350px;
+    text-align: center;
+    margin: 0 auto;
+    height: 60vh; /* Stel een vaste hoogte in */
+    overflow-y: auto; /* Maak verticale scrollbaarheid mogelijk */
+}
+
+/* Styling voor de koptekst van het formulier */
+.container h2 {
+    margin-bottom: 20px;
+    color: #ffccd5; /* Lichte rode kleur voor de koptekst */
+}
+
+/* Stijl voor de formulierelementen (invoervelden) */
+.container input[type="email"],
+.container input[type="password"],
+.container input[type="date"],
+.container input[type="text"],
+.container input[type="file"],
+.container textarea,
+.container select {
+    width: 94%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ffccd5; /* Lichte rode kleur voor de rand */
+    border-radius: 5px;
+    font-size: 14px;
+    background-color: #ffe6e6; /* Lichte achtergrondkleur voor invoervelden */
+}
+
+/* Stijl voor de labels boven de invoervelden */
+.container label {
+    color: #ffffff; /* Witte kleur voor de tekst boven de invoervelden */
+    font-size: 14px;
+    display: block;
+    margin-bottom: 5px;
+}
+
+/* Stijl voor de knoppen */
+.container button {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 5px;
+    background-color: #ffccd5; /* Lichte rode kleur voor de knoppen */
+    color: #b30000; /* Donkerrode kleur voor de tekst op de knoppen */
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.container button:hover {
+    background-color: #ffe6e6; /* Nog lichtere rode kleur voor hover effect */
+}
+
+/* Stijl voor foutmeldingen */
+.container p.error {
+    color: red;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+/* Styling voor de links (indien aanwezig, bijvoorbeeld "wachtwoord vergeten") */
+.container a {
+    display: block;
+    margin-top: 10px;
+    color: #ffccd5; /* Lichte rode kleur voor de links */
+    text-decoration: none;
+}
+
+.container a:hover {
+    text-decoration: underline;
+}
+
+/* Responsieve styling */
+@media (max-width: 500px) {
+    .container {
+        width: 100%;
+        padding: 20px;
+    }
+}
